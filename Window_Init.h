@@ -14,6 +14,4 @@ public:
 	MainGame& operator = (const MainGame& other) = delete;
 	~MainGame() noexcept;
 	bool gameShouldClose() const;
-
-
 };

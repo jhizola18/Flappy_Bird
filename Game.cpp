@@ -7,7 +7,7 @@ bool gameOver;
 
 Game::Game()
 	:
-	flap(4.0f, BLACK),
+	flap(170.0f, BLACK),
 	pipe((float)3.0f, GREEN),
 	gameState(),
 	manager()
@@ -16,7 +16,7 @@ Game::Game()
 
 void Game::CollisionChecker()
 {
-	if (!gameState.check_Collision(flap, pipe) && gameOver == false)
+	if (!gameState.check_Collision(flap, pipe) && gameOver == false && !flap.collision())
 	{
 		pipe.ObstacleMovement();
 		pipe.obstacleSpeed();

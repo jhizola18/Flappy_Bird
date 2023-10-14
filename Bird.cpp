@@ -1,5 +1,6 @@
 #include "Bird.h"
 
+int vertSpeed = 0;
 
 void flappy::setRadius(float radius_in)
 {
@@ -26,8 +27,8 @@ flappy::flappy(float gravity, Color color)
 	position(Vector2{ 80.0f, 300 }),
 	radius(15),
 	color(color),
-	gravity(gravity)
-
+	gravity(gravity),
+	jumpSpeed(120)
 {
 };
 
@@ -38,31 +39,19 @@ void flappy::DrawBird()
 	DrawCircleV(Vector2{position.x, position.y}, (float)radius, color);
 }
 
-
-
 void flappy::bird_Movement()
 {
-	if(IsKeyDown(KEY_SPACE))
+	float dt = GetFrameTime();
+	if(IsKeyPressed(KEY_SPACE))
 	{
-		position.y -= 5;
-		if (IsKeyPressed(KEY_SPACE))
-		{
-			Audio.wingSound();
-		}
-	}else {
-		//y position got updated bt adding the value of the current y position
-		// and the gravity
-		position.y += gravity;
+		vertSpeed = jumpSpeed;
+		Audio.wingSound();
 	}
-	
-	if (position.y + radius >= GetScreenHeight() || position.y - radius <= GetScreenHeight()/GetScreenHeight())
-	{
-		//this is to reverse the gravitational force that make the
-		//the object move at the first place
-		gravity *= 0;
-	}
+	//Formula for Bird falling 
+	vertSpeed += -gravity * dt;
+	//Formula for the circle to jump
+	position.y -= (vertSpeed * 2) * dt;
 }
-
 
 void flappy::deadBird()
 {
@@ -78,6 +67,18 @@ void flappy::deadBird()
 void flappy::birdReset()
 {
 	position = Vector2{ 80.0f, 300 };
+}
+
+bool flappy::collision()
+{
+	if (position.y + radius >= GetScreenHeight() || position.y - radius <= GetScreenHeight() / GetScreenHeight())
+	{
+		//this is to reverse the gravitational force that make the
+		//the object move at the first place
+		gravity *= 0;
+		return true;
+	}
+	return false;
 }
 
 

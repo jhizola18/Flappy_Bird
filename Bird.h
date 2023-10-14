@@ -11,6 +11,7 @@ private:
 	float radius;
 	float gravity;
 	const Color color;
+	const int jumpSpeed;
 
 	AudioManager Audio;
 	
@@ -25,4 +26,5 @@ public:
 	void bird_Movement();
 	void deadBird();
 	void birdReset();
+	bool collision();
 };                 

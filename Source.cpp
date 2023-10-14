@@ -4,7 +4,7 @@
 #include "menuManager.h"
 #include "Audio.h"
 
-//fix display of background
+
 int main() {
 
 	const int screenWidth = 800;
@@ -18,21 +18,21 @@ int main() {
 	
 	Image image = LoadImage("image/spriteback.png");
 	Texture2D Background = LoadTextureFromImage(image);
-
+	
 	audioStart.InitAudio();
 	   
 	UnloadImage(image);
 	while (!mainGame.gameShouldClose())
 	{ 
-		//Game game;
+		//Game game;  
 		std::unique_ptr<Game> ptr = std::make_unique<Game>();
 		do {
-			DrawTexture(Background, 0, 0, WHITE);
+			DrawTexture(Background, 0, 0, WHITE);  
 			ptr->gameLoop();
 			
 		} while (gameOver == false);
 		ptr.reset();
-	} 
+	}     
 	    
 	manager.clearGround();       
 	audioStart.CloseSound();   
