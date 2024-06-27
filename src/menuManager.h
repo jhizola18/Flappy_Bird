@@ -16,10 +16,9 @@ public:
 	void loadingAssets();
 	void MenuScreen();
 	void replayGame();
+	void insertscore();
 
 	void setTexture(Texture2D background_in);
 
 	Texture2D getTexture();
-
-	
 };

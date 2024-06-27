@@ -64,4 +64,6 @@ void Score::displayscore()
 		std::cout << result->getInt(1) << "\t" << result->getString(2) << "\t" << result->getInt(3) << "\n";
 	}
 
+
+
 }

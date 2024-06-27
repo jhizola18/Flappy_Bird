@@ -100,11 +100,13 @@ void Game::gameLoop()
 		DrawText(TextFormat("Your Score: %i", scoreCounter), 335, 250, 25, BLACK);
 
 		manager.replayGame();
+		manager.insertscore();
 		if (IsKeyPressed(KEY_Y))
 		{
 			int rank;
 			std::string name;
 			int scored;
+			
 			std::cout << "Enter score: ";
 			std::cin >> scored;
 			std::cout << "\n";
@@ -114,6 +116,7 @@ void Game::gameLoop()
 			std::cin >> rank;
 			std::cout << "\n";
 			score.insertscore(rank, name, scored);
+			
 			resetGame();
 			currentScreen = Title;
 			
