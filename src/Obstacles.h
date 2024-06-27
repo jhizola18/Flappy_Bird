@@ -9,19 +9,25 @@ class Pipe {
 private:
 
 	Rectangle recTop, recBot;
-	Color color;
+	const Color color;
 	int tubeSpeed;
-	float tubeGap;
-	float tubeWidth;
+	const float tubeGap;
+	const float tubeWidth;
 	std::list<Rectangle> topPipes;
 	std::list<Rectangle> botPipes;
 
 	Vector2 startPos;
 	Vector2 endPos;
+
+	float tubeminY;
+	float tubemaxY;
+
+	float topTubeHeight;
+	float bottomTubeHeight;
 	
 
 public:
-	Pipe(int tubeSpeed_in, Color color_in);
+	Pipe();
 	~Pipe()noexcept;
 	Pipe(const Pipe& other) = delete;
 	Pipe& operator = (const Pipe& other) = delete;
@@ -49,10 +55,6 @@ public:
 	Rectangle getBotRec();
 
 public:
-	float tubeminY;
-	float tubemaxY;
-
-	float topTubeHeight;
-	float bottomTubeHeight;
+	
 
 };

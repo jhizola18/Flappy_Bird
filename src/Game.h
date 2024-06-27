@@ -27,7 +27,6 @@ public:
 	Game();
 	~Game()noexcept;
 	void CollisionChecker();
-	void drawGame();
 	void resetGame();
 	void gameLoop();
 };

@@ -11,7 +11,7 @@ bool gameOver;
 Game::Game()
 	:
 	flap(170.0f, BLACK),
-	pipe((float)3.0f, GREEN),
+	pipe(),
 	gameState(),
 	score()
 {
@@ -24,7 +24,7 @@ Game::~Game() noexcept
 
 void Game::CollisionChecker()
 {
-	if (gameState.check_Collision(flap, pipe) && !flap.collision())
+	if (gameState.check_Collision(flap, pipe) || flap.collision())
 	{
 		if (frameCounter > 60)
 		{
@@ -63,9 +63,18 @@ void Game::gameLoop()
 		if (frameCounter > 120)
 		{
 			frameCounter = 0;
-			currentScreen = Gameplay;
+			currentScreen = Menu;
 		}
 		
+		break;
+	case Menu:
+
+		manager.MenuScreen();
+		if (IsKeyPressed(KEY_E)) {
+			currentScreen = Gameplay;
+		}
+
+
 		break;
 
 	case Gameplay:
@@ -75,7 +84,7 @@ void Game::gameLoop()
 		flap.DrawBird();
 		pipe.DrawObstacle();
 		DrawText(TextFormat("Score: %i", scoreCounter), 10, 10, 20, BLACK);
-		if (frameCounter > 120)
+		if (frameCounter > 120 && !gameOver)
 		{
 			pipe.initializer();
 			pipe.UpdateObstacle();

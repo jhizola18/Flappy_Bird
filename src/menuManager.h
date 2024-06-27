@@ -1,10 +1,10 @@
 #pragma once
 #include "raylib.h"
 #include "Window_Init.h"
-#include "raygui.h"
 
 
-typedef enum  gameScreen {Title = 0, titleBridge , Gameplay, Replay} gameScreen;
+
+typedef enum  gameScreen {Title = 0, titleBridge , Menu , Scores ,Gameplay, Replay} gameScreen;
 
 class menuManager {
 private:

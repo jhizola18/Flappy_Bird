@@ -49,12 +49,11 @@ Rectangle Pipe::getBotRec()
 
 
 
-Pipe::Pipe(int tubeSpeed_in, Color color_in)
+Pipe::Pipe()
 	:
 	recTop(getTopRec()),
 	recBot(getBotRec()),
-	color(color_in),
-	tubeSpeed(tubeSpeed_in),
+	color(GREEN),
 	tubeGap(150.0f),
 	tubeWidth(70.0f)
 
@@ -70,6 +69,7 @@ Pipe::Pipe(int tubeSpeed_in, Color color_in)
 
 	startPos = {(float)GetScreenWidth() - 20.0f, 0.0f};
 	endPos = {(float)GetScreenWidth() - 20.0f,(float)GetScreenHeight()};
+	tubeSpeed = 250.0f;
 }
 
 Pipe::~Pipe() noexcept
@@ -194,12 +194,12 @@ void Pipe::obstacleSpeed()
 {
 	for (auto& Toppipe : topPipes)
 	{
-		Toppipe.x -= tubeSpeed;
+		Toppipe.x -= tubeSpeed * GetFrameTime();
 	}
 
 	for (auto& Botpipe : botPipes)
 	{
-		Botpipe.x -= tubeSpeed;
+		Botpipe.x -= tubeSpeed * GetFrameTime();
 	}
 }
 

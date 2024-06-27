@@ -4,7 +4,7 @@
 GameState::GameState()
 	:
 	flap(170.0f, BLACK),
-	pipes(3.0f, GREEN)
+	pipes()
 {
 };
 

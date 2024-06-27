@@ -1,5 +1,6 @@
 #include "menuManager.h"
-
+#define RAYGUI_IMPLEMENTATION
+#include "raygui.h"
 
 menuManager::menuManager() 
 {
@@ -23,7 +24,7 @@ void menuManager::loadingAssets()
 void menuManager::MenuScreen()
 {
 	DrawText("FLAPPY CIRCLE", 230, 300, 30, BLACK);
-	//GuiButton({});
+	GuiButton({350, 250, 350, 50},"PRESS E to Play");
 }
 
 void menuManager::replayGame()
