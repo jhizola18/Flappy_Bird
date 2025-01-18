@@ -27,40 +27,17 @@ std::list<Rectangle> Pipe::getBotPipe()
 }
 
 
-void Pipe::setTopRec(Rectangle rec_Top)
-{
-	recTop = rec_Top;
-}
-
-Rectangle Pipe::getTopRec()
-{
-	return recTop;
-}
-
-void Pipe::setBotRec(Rectangle rec_Bot)
-{
-	recBot = rec_Bot;
-}
-
-Rectangle Pipe::getBotRec()
-{
-	return recBot;
-}
-
-
 Pipe::Pipe()
 	:
-	recTop(getTopRec()),
-	recBot(getBotRec()),
 	color(GREEN),
 	tubeGap(150.0f),
 	tubeWidth(70.0f)
 {
-	float tubeminY = tubeGap;
-	float tubemaxY = GetScreenHeight() - tubeGap - tubeminY;
+	tubeminY = tubeGap;
+	tubemaxY = GetScreenHeight() - tubeGap - tubeminY;
 
-	float topTubeHeight =  GetRandomValue(tubeminY, tubemaxY);;
-	float bottomTubeHeight =  GetScreenHeight() - tubeGap - topTubeHeight;
+	topTubeHeight =  GetRandomValue(tubeminY, tubemaxY);;
+	bottomTubeHeight =  GetScreenHeight() - tubeGap - topTubeHeight;
 
 	topPipes.push_back(Rectangle{ (float)GetScreenWidth() , 0,tubeWidth, topTubeHeight });
 	botPipes.push_back(Rectangle{ (float)GetScreenWidth(), GetScreenHeight() - bottomTubeHeight, tubeWidth, bottomTubeHeight });

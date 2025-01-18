@@ -6,7 +6,6 @@
 class Pipe {
 private:
 
-	Rectangle recTop, recBot;
 	const Color color;
 	int tubeSpeed;
 	const float tubeGap;
@@ -46,9 +45,6 @@ public:
 	std::list<Rectangle> getTopPipe();
 	void setBotPipe(std::list<Rectangle> botPipes);
 	std::list<Rectangle> getBotPipe();
-	void setTopRec(Rectangle rec_Top);
-	Rectangle getTopRec();
-	void setBotRec(Rectangle rec_Bot);
-	Rectangle getBotRec();
+
 	
 };
