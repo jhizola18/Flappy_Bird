@@ -16,7 +16,7 @@ public:
 	void loadingAssets();
 	void MenuScreen();
 	void replayGame();
-	void insertscore();
+	std::string insertscore();
 
 	void setTexture(Texture2D background_in);
 

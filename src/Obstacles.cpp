@@ -1,13 +1,13 @@
+#include <iostream>
 #include "Obstacles.h"
-#include <fstream>
 
-int scoreCounter = 0;
-int highScore = 0;
+
+
 
 //setter/getter
 void Pipe::setTopPipe(std::list<Rectangle> topPipes)
 {
-	topPipes = topPipes;
+	this->topPipes = topPipes;
 
 }
 
@@ -18,7 +18,7 @@ std::list<Rectangle> Pipe::getTopPipe()
 
 void Pipe::setBotPipe(std::list<Rectangle> botPipes)
 {
-	botPipes = botPipes;
+	this->botPipes = botPipes;
 }
 
 std::list<Rectangle> Pipe::getBotPipe()
@@ -48,7 +48,6 @@ Rectangle Pipe::getBotRec()
 }
 
 
-
 Pipe::Pipe()
 	:
 	recTop(getTopRec()),
@@ -56,7 +55,6 @@ Pipe::Pipe()
 	color(GREEN),
 	tubeGap(150.0f),
 	tubeWidth(70.0f)
-
 {
 	float tubeminY = tubeGap;
 	float tubemaxY = GetScreenHeight() - tubeGap - tubeminY;
@@ -74,23 +72,13 @@ Pipe::Pipe()
 
 Pipe::~Pipe() noexcept
 {
-	for (size_t i = 0; i < topPipes.size(); ++i) {
-		topPipes.pop_front();
-	}
-	for (size_t i = 0; i < botPipes.size(); ++i) {
-		botPipes.pop_front();
-	}
+	topPipes.clear();
+	botPipes.clear();
 }
 
 void Pipe::resetObstacle()
 {
-	for (size_t i = 0; i < topPipes.size(); ++i) {
-		topPipes.pop_front();
-	}
-	for (size_t i = 0; i < botPipes.size(); ++i) {
-		botPipes.pop_front();
-	}
-
+	
 	tubeminY = tubeGap;
 	tubemaxY = GetScreenHeight() - tubeGap - tubeminY;
 
@@ -104,9 +92,14 @@ void Pipe::resetObstacle()
 	botPipes.push_back(Rectangle{ (float)GetScreenWidth(), GetScreenHeight() - bottomTubeHeight, tubeWidth, bottomTubeHeight });
 }
 
+void Pipe::removeObstacle()
+{
+	topPipes.clear();
+	botPipes.clear();
+}
+
 void Pipe::initializer()
 {
-	//DrawLine(startPos.x, startPos.y, endPos.x, endPos.y, BLACK);
 	startPos.x -= 8.5f;
 	endPos.x -= 8.5f;
 }
@@ -127,68 +120,30 @@ void Pipe::DrawObstacle()
 
 void Pipe::UpdateObstacle()
 {
-	
 	tubeminY = tubeGap;
 	tubemaxY = GetScreenHeight() - tubeGap - tubeminY;
 
 	topTubeHeight = GetRandomValue(tubeminY, tubemaxY);;
 	bottomTubeHeight = GetScreenHeight() - tubeGap - topTubeHeight;
 
-	if (startPos.x  < GetScreenWidth()/2)
+	//if (startPos.x  < GetScreenWidth()/2.0f)
+	//{
+	//not popping the front this is not working after resetting the game
+	if (botPipes.front().x + botPipes.front().width < 0 && botPipes.front().x < 0 && !topPipes.empty() && !botPipes.empty())
 	{
-		if (topPipes.front().x + topPipes.front().width < 0)
-		{
-			scoreCounter += 1;
-
-			topPipes.pop_front();
-			botPipes.pop_front();
-		}
-
-		topPipes.push_back(Rectangle{ topPipes.back().x + tubeGap + tubeWidth , 0,tubeWidth, topTubeHeight});
-		botPipes.push_back(Rectangle{ botPipes.back().x + tubeGap + tubeWidth, GetScreenHeight() - bottomTubeHeight, tubeWidth, bottomTubeHeight });
-	}
-	std::ifstream highScoreFile("highScore.txt");
-	if (highScoreFile.is_open())
-	{
-
-		highScoreFile >> highScore;
-		highScoreFile.close();
-
-	}
-	else {
-		DrawText(" ", 10, 30, 20, BLACK);
+		std::cout << "pop Front\n";
+		botPipes.pop_front();
+		topPipes.pop_front();
+			
 	}
 	
-	highScoreManager();
+		
+	topPipes.push_back(Rectangle{ topPipes.back().x + tubeGap + tubeWidth , 0,tubeWidth, topTubeHeight});
+	botPipes.push_back(Rectangle{ botPipes.back().x + tubeGap + tubeWidth, GetScreenHeight() - bottomTubeHeight, tubeWidth, bottomTubeHeight });
+	//}	
 }
 
 
-
-int Pipe::highScoreManager()
-{
-	if (scoreCounter > highScore)
-	{
-		highScore = scoreCounter - 1;
-		std::ofstream scoreFile("highScore.txt");
-
-		if (scoreFile.is_open())
-		{
-
-			scoreFile << highScore;
-
-			scoreFile.close();
-		}
-
-		std::ifstream highScoreFile("highScore.txt");
-		if (highScoreFile.is_open())
-		{
-			highScoreFile >> highScore;
-			highScoreFile.close();
-		}
-
-		return highScore;
-	}
-}
 
 void Pipe::obstacleSpeed()
 {

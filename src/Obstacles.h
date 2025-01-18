@@ -2,8 +2,6 @@
 #include "raylib.h"
 #include <list>
 
-extern int scoreCounter;
-extern int highScore;
 
 class Pipe {
 private:
@@ -25,7 +23,6 @@ private:
 	float topTubeHeight;
 	float bottomTubeHeight;
 	
-
 public:
 	Pipe();
 	~Pipe()noexcept;
@@ -37,14 +34,14 @@ public:
 	void initializer();
 	void DrawObstacle();
 	void UpdateObstacle();
-	int highScoreManager();
 	void obstacleSpeed();
 	void resetObstacle();
+	void removeObstacle();
 
 	//setter & getter
 public:
-	void setTubeSpeed(int tubeSpeed_in) const;
-	int getTubeSpeed() const;
+	//void setTubeSpeed(int tubeSpeed_in) const;
+	//int getTubeSpeed() const;
 	void setTopPipe(std::list<Rectangle> topPipes);
 	std::list<Rectangle> getTopPipe();
 	void setBotPipe(std::list<Rectangle> botPipes);
@@ -53,8 +50,5 @@ public:
 	Rectangle getTopRec();
 	void setBotRec(Rectangle rec_Bot);
 	Rectangle getBotRec();
-
-public:
 	
-
 };

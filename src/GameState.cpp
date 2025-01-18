@@ -1,6 +1,8 @@
 #include "GameState.h"
 #include "menuManager.h"
 
+int scores = 0;
+
 GameState::GameState()
 	:
 	flap(170.0f, BLACK),
@@ -28,6 +30,18 @@ bool GameState::check_Collision( flappy& flap, Pipe& pipes) const
 	}
 
 	return false;
+}
+
+void GameState::check_PastObastacle(flappy& flap, Pipe& pipes)
+{
+	
+	for (const auto& item : pipes.getBotPipe()) {
+		if (item.x < 0 && item.x + item.width < 0) {
+			scores += 1;
+			break;
+		}
+	}
+	
 }
 
 

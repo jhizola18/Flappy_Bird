@@ -1,13 +1,10 @@
 #include <iostream>
 #include "Game.h"
 
-
 gameScreen currentScreen = Title;
 int frameCounter = 0;
 bool gameOver;
 
-
-//REFACTOR AND CREATE MENU AND FINISH DATABASE
 Game::Game()
 	:
 	flap(170.0f, BLACK),
@@ -21,7 +18,7 @@ Game::~Game() noexcept
 {
 
 }
-
+ 
 void Game::CollisionChecker()
 {
 	if (gameState.check_Collision(flap, pipe) || flap.collision())
@@ -29,20 +26,22 @@ void Game::CollisionChecker()
 		if (frameCounter > 60)
 		{
 			audioManager.gameOverSound();
-			currentScreen = Replay;
+			
 		}
 		flap.deadBird();
 		gameOver = true;
-		score.displayscore();
+		//score.displayscore();
+		currentScreen = Replay;
 	}
 }
 
 void Game::resetGame()
-{
-	scoreCounter = 0;
+{                      
+	scores = 0;
 	gameOver = false;
 	frameCounter = 0;
 	flap.birdReset();
+	pipe.removeObstacle();
 	pipe.resetObstacle();
 }
 
@@ -52,6 +51,7 @@ void Game::gameLoop()
 	switch (currentScreen)
 	{
 	case Title:
+	
 		manager.titleScreen();
 		currentScreen = titleBridge;
 		break;
@@ -60,6 +60,7 @@ void Game::gameLoop()
 
 		frameCounter++;
 		manager.loadingAssets();
+		
 		if (frameCounter > 120)
 		{
 			frameCounter = 0;
@@ -70,11 +71,10 @@ void Game::gameLoop()
 	case Menu:
 
 		manager.MenuScreen();
+		
 		if (IsKeyPressed(KEY_E)) {
 			currentScreen = Gameplay;
 		}
-
-
 		break;
 
 	case Gameplay:
@@ -83,45 +83,40 @@ void Game::gameLoop()
 		
 		flap.DrawBird();
 		pipe.DrawObstacle();
-		DrawText(TextFormat("Score: %i", scoreCounter), 10, 10, 20, BLACK);
+		
 		if (frameCounter > 120 && !gameOver)
 		{
+			gameState.check_PastObastacle(flap, pipe);
+			CollisionChecker();
+			DrawText(TextFormat("High-Score: %i", score.showHighScore()), 10, 10, 20, BLACK);
+			DrawText(TextFormat("Score: %d", scores), 10, 25, 20, BLACK);
 			pipe.initializer();
 			pipe.UpdateObstacle();
 			pipe.obstacleSpeed();
 			flap.bird_Movement();
-			CollisionChecker();
+			
 		}
 		break;
 		
 	case Replay: 
-
-		DrawText(TextFormat("High-Score: %i", highScore), 325, 200, 25, BLACK);
-		DrawText(TextFormat("Your Score: %i", scoreCounter), 335, 250, 25, BLACK);
-
+		DrawText(TextFormat("Your Score: %i", scores), 335, 250, 25, BLACK);
 		manager.replayGame();
-		manager.insertscore();
+		
+		score.current_highscore = score.highScoreManager(scores);
 		if (IsKeyPressed(KEY_Y))
 		{
-			int rank;
-			std::string name;
-			int scored;
-			
-			std::cout << "Enter score: ";
-			std::cin >> scored;
-			std::cout << "\n";
-			std::cout << "Enter name: ";
-			std::cin >> name;
-			std::cout << "Enter Rank: ";
-			std::cin >> rank;
-			std::cout << "\n";
-			score.insertscore(rank, name, scored);
+			/*	if (scoreCounter > highScore) {
+				std::string playerName = manager.insertscore();
+				int currentScore = scoreCounter;
+				score.insertscore(playerName, currentScore);
+			}*/
 			
 			resetGame();
 			currentScreen = Title;
-			
 		}
 		
+		break;
+	default:
 		break;
 	}
 	

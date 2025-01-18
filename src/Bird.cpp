@@ -56,7 +56,6 @@ void flappy::bird_Movement()
 
 void flappy::deadBird()
 {
-	
 	position.y += 0;
 	if (position.y + radius >= GetScreenHeight() || position.y - radius <= 0)
 	{

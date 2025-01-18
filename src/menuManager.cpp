@@ -3,7 +3,7 @@
 #include "raygui.h"
 #define MAX_INPUT_CHARS     9
 
-char name[MAX_INPUT_CHARS + 1] = "\0";      // NOTE: One extra space required for null terminator char '\0'
+char name[MAX_INPUT_CHARS + 1];      // NOTE: One extra space required for null terminator char '\0'
 int letterCount = 0;
 
 menuManager::menuManager()
@@ -39,10 +39,10 @@ void menuManager::replayGame()
 	DrawText("Click Y if Yes or Escape to Exit Windows", 130, 360, 30, BLACK);
 }
 
-void menuManager::insertscore()
-{
-   
 
+
+std::string menuManager::insertscore()
+{
     Rectangle textBox = { GetScreenWidth() / 2.0f - 100, 180, 225, 50 };
     bool mouseOnText = false;
 
@@ -104,6 +104,8 @@ void menuManager::insertscore()
         else DrawText("Press BACKSPACE to delete chars...", 230, 300, 20, GRAY);
     }
 	
+
+    return name;
 }
 
 

@@ -5,7 +5,7 @@
 #include "GameState.h"
 #include "menuManager.h"
 #include "Audio.h"
-#include "score.h"
+//#include "score.h"
 
 extern bool gameOver;
 extern int frameCounter;

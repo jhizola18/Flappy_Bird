@@ -13,17 +13,14 @@ int main() {
 	MainGame mainGame{ screenWidth, screenHeight, 74 ,"Flappy Bird" };
 	InitAudioDevice();
 
-	Score score;
+	//Score score;
 	AudioManager audioStart;
 	Game game;
 
-	
 	Image image = LoadImage("image/spriteback.png");
 	Texture2D Background = LoadTextureFromImage(image);
 	
-	score.connect();
-	
-	
+	//score.connect();
 	
 	while (!mainGame.gameShouldClose())
 	{ 

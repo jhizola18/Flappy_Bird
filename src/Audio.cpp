@@ -21,7 +21,8 @@ AudioManager::~AudioManager() noexcept
 
 void AudioManager::gameOverSound() 
 {
-	if (!IsSoundReady(sfx_Over))
+
+	if (!IsSoundValid(sfx_Over))
 	{
 		DrawText("Error In Sound", GetScreenWidth()/2, GetScreenHeight()/2, 40, BLACK);
 	}
