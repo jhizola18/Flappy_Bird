@@ -103,21 +103,16 @@ void Pipe::UpdateObstacle()
 	topTubeHeight = GetRandomValue(tubeminY, tubemaxY);;
 	bottomTubeHeight = GetScreenHeight() - tubeGap - topTubeHeight;
 
-	//if (startPos.x  < GetScreenWidth()/2.0f)
-	//{
-	//not popping the front this is not working after resetting the game
 	if (botPipes.front().x + botPipes.front().width < 0 && botPipes.front().x < 0 && !topPipes.empty() && !botPipes.empty())
 	{
-		std::cout << "pop Front\n";
 		botPipes.pop_front();
-		topPipes.pop_front();
-			
+		topPipes.pop_front();	
 	}
 	
 		
 	topPipes.push_back(Rectangle{ topPipes.back().x + tubeGap + tubeWidth , 0,tubeWidth, topTubeHeight});
 	botPipes.push_back(Rectangle{ botPipes.back().x + tubeGap + tubeWidth, GetScreenHeight() - bottomTubeHeight, tubeWidth, bottomTubeHeight });
-	//}	
+
 }
 
 

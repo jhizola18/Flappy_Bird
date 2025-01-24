@@ -4,6 +4,7 @@
 gameScreen currentScreen = Title;
 int frameCounter = 0;
 bool gameOver;
+std::string playerName = "";
 
 Game::Game()
 	:
@@ -30,7 +31,7 @@ void Game::CollisionChecker()
 		}
 		flap.deadBird();
 		gameOver = true;
-		//score.displayscore();
+		score.displayscore();
 		currentScreen = Replay;
 	}
 }
@@ -51,7 +52,7 @@ void Game::gameLoop()
 	switch (currentScreen)
 	{
 	case Title:
-	
+
 		manager.titleScreen();
 		currentScreen = titleBridge;
 		break;
@@ -60,30 +61,30 @@ void Game::gameLoop()
 
 		frameCounter++;
 		manager.loadingAssets();
-		
+
 		if (frameCounter > 120)
 		{
 			frameCounter = 0;
 			currentScreen = Menu;
 		}
-		
+
 		break;
 	case Menu:
 
 		manager.MenuScreen();
-		
+
 		if (IsKeyPressed(KEY_E)) {
 			currentScreen = Gameplay;
 		}
 		break;
 
 	case Gameplay:
-		
+
 		frameCounter++;
-		
+
 		flap.DrawBird();
 		pipe.DrawObstacle();
-		
+
 		if (frameCounter > 120 && !gameOver)
 		{
 			gameState.check_PastObastacle(flap, pipe);
@@ -94,26 +95,30 @@ void Game::gameLoop()
 			pipe.UpdateObstacle();
 			pipe.obstacleSpeed();
 			flap.bird_Movement();
-			
+
 		}
 		break;
-		
-	case Replay: 
+
+	case Replay:
 		DrawText(TextFormat("Your Score: %i", scores), 335, 250, 25, BLACK);
 		manager.replayGame();
-		
+
 		score.current_highscore = score.highScoreManager(scores);
+		if (scores > score.current_highscore) {
+			playerName = manager.insertscore();
+		}
 		if (IsKeyPressed(KEY_Y))
 		{
-			/*	if (scoreCounter > highScore) {
-				std::string playerName = manager.insertscore();
-				int currentScore = scoreCounter;
-				score.insertscore(playerName, currentScore);
-			}*/
-			
+			if (scores > score.current_highscore) {
+				int currentScore = scores;
+				score.insertscore(playerName, score.highScoreManager(currentScore));
+				scores = 0;
+			}
 			resetGame();
 			currentScreen = Title;
 		}
+		
+		
 		
 		break;
 	default:

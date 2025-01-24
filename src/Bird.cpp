@@ -24,12 +24,12 @@ Vector2 flappy::getPos() const
 
 flappy::flappy(float gravity, Color color)
 	:
-	position(Vector2{ 80.0f, 300 }),
+	position({ 80.0f, 300.0f }),
 	color(color),
 	jumpSpeed(120),
 	Audio()
 {
-	radius = 15;
+	radius = 15.0f;
 	birdgravity = gravity;
 };
 
@@ -56,17 +56,18 @@ void flappy::bird_Movement()
 
 void flappy::deadBird()
 {
-	position.y += 0;
-	if (position.y + radius >= GetScreenHeight() || position.y - radius <= 0)
+	position.y += 0.0f;
+	if (position.y + radius >= GetScreenHeight() || position.y - radius <= 0.0f)
 	{
-		birdgravity *= 0;
+		birdgravity *= 0.0f;
 	}
 }
 
 
 void flappy::birdReset()
 {
-	position = Vector2{ 80.0f, 300 };
+	position = Vector2{ 80.0f, 300.0f };
+	vertSpeed = 0.0f;
 }
 
 bool flappy::collision()
@@ -75,7 +76,7 @@ bool flappy::collision()
 	{
 		//this is to reverse the gravitational force that make the
 		//the object move at the first place
-		birdgravity *= 0;
+		birdgravity *= 0.0f;
 		return true;
 	}
 	return false;

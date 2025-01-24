@@ -50,7 +50,6 @@ void Score::insertscore(std::string user, int score)
 		pst->setInt(2, score);
 		pst->execute();
 		std::cout << "Score Saved!!!";
-		
 	}
 	catch (sql::SQLException ex) {
 		std::cout << "Score not Saved!!!";
